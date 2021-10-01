@@ -1,0 +1,18 @@
+2021/09/24 17:51:54 [emerg] 10087#0: open() "/home/dev/repos/final-project/nginx/nginx/conf/nginx.conf" failed (2: No such file or directory)
+2021/09/24 17:52:32 [emerg] 10106#0: open() "/conf/nginx.conf" failed (2: No such file or directory)
+2021/09/24 17:52:44 [emerg] 10125#0: open() "/home/dev/repos/final-project/nginx/nginx/conf/nginx.conf" failed (2: No such file or directory)
+2021/09/24 17:52:57 [emerg] 10143#0: open() "/home/dev/repos/final-project/nginx/nginx/nginx.conf" failed (2: No such file or directory)
+2021/09/24 17:53:21 [emerg] 10162#0: open() "/home/dev/repos/final-project/nginx/../conf/nginx.conf" failed (2: No such file or directory)
+2021/09/24 17:53:36 [emerg] 10180#0: open() "/home/dev/repos/final-project/nginx/../conf/nginx.conf" failed (2: No such file or directory)
+2021/09/24 17:54:01 [emerg] 10199#0: open() "/home/dev/repos/final-project/nginx/./nginx/nginx.conf" failed (2: No such file or directory)
+2021/09/24 17:54:25 [emerg] 10218#0: open() "/home/dev/repos/final-project/nginx/nginx.conf" failed (2: No such file or directory)
+2021/09/24 17:54:42 [warn] 10236#0: the "user" directive makes sense only if the master process runs with super-user privileges, ignored in /home/dev/repos/final-project/nginx/conf/nginx.conf:3
+2021/09/24 17:54:42 [emerg] 10236#0: cannot load certificate "/etc/letsencrypt/live/kamaii.tv/fullchain.pem": BIO_new_file() failed (SSL: error:02001002:system library:fopen:No such file or directory:fopen('/etc/letsencrypt/live/kamaii.tv/fullchain.pem','r') error:2006D080:BIO routines:BIO_new_file:no such file)
+2021/09/24 17:57:26 [warn] 10507#0: the "user" directive makes sense only if the master process runs with super-user privileges, ignored in /home/dev/repos/final-project/nginx/conf/nginx.conf:3
+2021/09/24 17:57:26 [emerg] 10507#0: cannot load certificate "/etc/letsencrypt/live/kamaii.tv/fullchain.pem": BIO_new_file() failed (SSL: error:02001002:system library:fopen:No such file or directory:fopen('/etc/letsencrypt/live/kamaii.tv/fullchain.pem','r') error:2006D080:BIO routines:BIO_new_file:no such file)
+2021/09/24 17:57:47 [warn] 10526#0: the "user" directive makes sense only if the master process runs with super-user privileges, ignored in /home/dev/repos/final-project/nginx/conf/nginx.conf:3
+2021/09/24 17:57:47 [emerg] 10526#0: mkdir() "/home/kamaii/kamaiitv/server/public/live" failed (2: No such file or directory)
+2021/09/24 17:58:23 [warn] 10545#0: the "user" directive makes sense only if the master process runs with super-user privileges, ignored in /home/dev/repos/final-project/nginx/conf/nginx.conf:3
+2021/09/24 17:58:23 [emerg] 10546#0: open() "/home/kamaii/nginx.pid" failed (2: No such file or directory)
+2021/09/24 17:58:39 [warn] 10563#0: the "user" directive makes sense only if the master process runs with super-user privileges, ignored in /home/dev/repos/final-project/nginx/conf/nginx.conf:3
+2021/09/24 17:58:39 [emerg] 10564#0: open() "/home/kamaii/nginx.pid" failed (2: No such file or directory)
