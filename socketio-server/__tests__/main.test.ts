@@ -2,6 +2,7 @@ jest.setTimeout(300);
 import server from "../main";
 import io, { Socket } from "socket.io-client";
 const testPort = 3215;
+jest.setTimeout(100);
 describe("Socket IO runs without crashing", () => {
   let socket: Socket;
   beforeAll((done) => {
