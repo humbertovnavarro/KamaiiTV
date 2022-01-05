@@ -7,5 +7,7 @@ interface User {
 }
 interface Socket extends IOSocket {
   user? : User
+  publicRoom?: string | null,
+  privateRoom?: string | null
 }
 export { User, Socket }
