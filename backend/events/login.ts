@@ -1,10 +1,10 @@
 import { Socket, User } from "../types";
-import { validateUser } from "lib/validators";
+import { validateUser } from "../lib/validators";
 import jwt from "jsonwebtoken";
 import config from "../config.json";
 import logger from '../lib/logger';
 export default function login(socket: Socket) {
-  const { token } = socket.handshake.auth.token;
+  const token = socket.handshake.auth.token;
   try {
     const decoded = jwt.verify(token, config.secret) as User;
     if(!validateUser(decoded)) {
