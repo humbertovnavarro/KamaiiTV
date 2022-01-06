@@ -1,18 +1,8 @@
-const { Client } = require('pg');
-const client = new Client();
-require('dotenv').config();
-async function connect() {
-  if(!client.connection) {
-    try {
-      await client.connect();
-    } catch(err) {
-      console.error(err);
-      process.exit(1);
-    }
-  }
-  return client;
+import { Client } from "pg";
+import dotenv from "dotenv";
+dotenv.config();
+class Database extends Client {
+
 }
-async function disconnect() {
-  await client.end();
-}
-export default { connect, disconnect };
+const db = new Database();
+export default db;
