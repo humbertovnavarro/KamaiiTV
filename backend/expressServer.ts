@@ -1,0 +1,12 @@
+import expressServer from "express";
+import { createServer } from "http";
+import login from "./routes/users/login";
+import register from "./routes/users/register";
+import test from "./routes/test";
+const express = expressServer();
+express.use(expressServer.json());
+express.post("/v1/users/login", login);
+express.post("/v1/users/register", register);
+express.get("/v1/test", test);
+const httpServer = createServer(express);
+export { httpServer, express };

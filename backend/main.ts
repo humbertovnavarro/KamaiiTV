@@ -1,30 +1,16 @@
-import { Server, Socket as IOSocket } from "socket.io";
-import { Socket } from "./types";
-import expressServer from "express";
-import { createServer } from "http";
+import { httpServer } from "./expressServer";
+import setup from "./ioServer";
+import dotenv from "dotenv";
 import logger from "./lib/logger";
-import login from "./events/login";
-const IOOptions = {
-  cors: {
-    origin: process.env.CORS_ORIGIN || "*",
-    methods: "GET, POST",
+dotenv.config();
+setup(httpServer);
+if(require.main === module) {
+  try {
+    httpServer.listen(process.env.PORT);
+    logger.logInfo(`Listening on port ${process.env.PORT}`);
+  } catch(err) {
+    logger.logFatal("Error starting server", err);
+    process.exit(1);
   }
-};
-const express = expressServer();
-const httpServer = createServer(express);
-const io = new Server(httpServer, IOOptions);
-
-io.on("connection", (ioSocket: IOSocket) => {
-  const socket = ioSocket as Socket;
-  login(socket);
-});
-
-express.use(expressServer.json());
-
-// * Start the server if its being run directly
-if (require.main === module) {
-  httpServer.listen(process.env.PORT || 3000, () => {
-    logger.logInfo(`Server listening on port ${process.env.PORT || 3000}`);
-  });
 }
-export default io;
+export default httpServer;

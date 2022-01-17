@@ -1,8 +1,13 @@
-import { Client } from "pg";
+import pg from "pg";
 import dotenv from "dotenv";
 dotenv.config();
-class Database extends Client {
+const URL = process.env.DATABASE_URL;
+const db = new pg.Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
 
-}
-const db = new Database();
+export { URL };
 export default db;
