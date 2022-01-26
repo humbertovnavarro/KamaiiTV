@@ -1,11 +1,9 @@
 node_modules
-socketio-server/node_modules
-socketio-server/config.json
 .DS_Store
 .vscode
 *.log
 .env
-./nginx.pid
 debug.log
 error.log
 config.json
+prisma/migrations

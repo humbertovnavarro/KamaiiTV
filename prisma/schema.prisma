@@ -1,0 +1,104 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource client {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Message {
+  id        String @id @default(cuid())
+  userId    String
+  text      String
+  createdAt DateTime @default(now())
+  deletedAt DateTime
+}
+
+model User {
+  id String @id @default(cuid())
+  username String
+  email String
+}
+
+model UserAuth {
+  id String @id @default(cuid())
+  token String
+  valid Boolean
+}
+
+model GoogleAuth {
+  id String @id @default(cuid())
+  token String
+  valid Boolean
+}
+
+model Emote {
+  id String @id @default(cuid())
+  name String
+  bytes Bytes
+}
+
+model ChannelEmote {
+  id String @id @default(cuid())
+  channel String
+}
+
+model Avatar {
+  id String @id @default(cuid())
+  name String
+  bytes Bytes
+}
+
+model Channel {
+  id String @id @default(cuid())
+  name String
+  description String
+  user String
+  viewers Int
+}
+
+model ChannelCard {
+  id String @id @default(cuid())
+  channel String
+  type String
+  heading String
+  body String
+}
+
+model Viewer {
+  id String @id @default(cuid())
+  channel String
+  user String
+}
+
+model StreamKey {
+  userId String @id @default(cuid())
+  key String
+}
+
+model Stream {
+  id String @id @default(cuid())
+  userId String
+  description String
+  game String
+  createdAt DateTime @default(now())
+}
+
+model Game {
+  id String @id @default(cuid())
+  name String
+  publisher String
+  description String
+  storeUrl String
+  url String
+}
+
+model SteamGame {
+  id String @id @default(cuid())
+  gameId String
+  url String
+}
