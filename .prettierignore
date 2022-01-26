@@ -1,0 +1,11 @@
+node_modules
+.DS_Store
+.vscode
+*.log
+.env
+debug.log
+error.log
+config.json
+prisma
+.github
+.next
