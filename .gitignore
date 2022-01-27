@@ -7,3 +7,4 @@ debug.log
 error.log
 config.json
 prisma/migrations
+.next
