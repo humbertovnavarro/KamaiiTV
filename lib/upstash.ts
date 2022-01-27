@@ -14,19 +14,20 @@ async function upstash({
       authorization: `Bearer ${token}`,
       ...init.headers,
     },
-  })
+  });
 
-  const data = res.headers.get('Content-Type')?.includes('application/json')
+  const data = res.headers.get("Content-Type")?.includes("application/json")
     ? await res.json()
-    : await res.text()
+    : await res.text();
 
   if (res.ok) {
-    return data
+    return data;
   } else {
     throw new Error(
-      `Upstash failed with (${res.status}): ${typeof data === 'string' ? data : JSON.stringify(data, null, 2)
+      `Upstash failed with (${res.status}): ${
+        typeof data === "string" ? data : JSON.stringify(data, null, 2)
       }`
-    )
+    );
   }
 }
 
@@ -34,28 +35,28 @@ export async function upstashRest(
   args: any[],
   options?: { pipeline: boolean }
 ) {
-  const domain = process.env.UPSTASH_REST_API_DOMAIN
-  const token = process.env.UPSTASH_REST_API_TOKEN
+  const domain = process.env.UPSTASH_REST_API_DOMAIN;
+  const token = process.env.UPSTASH_REST_API_TOKEN;
 
   if (!domain || !token) {
-    throw new Error('Missing required Upstash credentials of the REST API')
+    throw new Error("Missing required Upstash credentials of the REST API");
   }
 
   return upstash({
     token,
-    url: `https://${domain}${options?.pipeline ? '/pipeline' : ''}`,
-    method: 'POST',
+    url: `https://${domain}${options?.pipeline ? "/pipeline" : ""}`,
+    method: "POST",
     body: JSON.stringify(args),
-  })
+  });
 }
 
 export async function upstashEdge(args: any[]) {
-  const domain = process.env.UPSTASH_EDGE_API_DOMAIN
-  const token = process.env.UPSTASH_EDGE_API_TOKEN
+  const domain = process.env.UPSTASH_EDGE_API_DOMAIN;
+  const token = process.env.UPSTASH_EDGE_API_TOKEN;
 
   if (!domain || !token) {
-    throw new Error('Missing required Upstash credentials of the Edge API')
+    throw new Error("Missing required Upstash credentials of the Edge API");
   }
 
-  return upstash({ token, url: `https://${domain}/${args.join('/')}` })
+  return upstash({ token, url: `https://${domain}/${args.join("/")}` });
 }

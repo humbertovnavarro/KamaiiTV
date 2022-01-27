@@ -24,14 +24,8 @@ model User {
   username String
   usernameLower String
   password String
-  accountStatus String @default("unregistered")
-}
-
-model Email {
-  id String @id @default(cuid()) @map("_id")
   email String
-  userId String
-  createdAt DateTime @default(now())
+  accountStatus String @default("unregistered")
 }
 
 model Emote {
