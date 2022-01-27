@@ -2,16 +2,17 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 datasource client {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
 }
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["mongoDb"]
 }
 
 model Message {
-  id        String @id @default(cuid())
+  id        String @id @default(cuid()) @map("_id")
   userId    String
   text      String
   createdAt DateTime @default(now())
@@ -19,50 +20,46 @@ model Message {
 }
 
 model User {
-  id String @id @default(cuid())
+  id String @id @default(cuid()) @map("_id")
   username String
+  usernameLower String
+  password String
+  accountStatus String @default("unregistered")
+}
+
+model Email {
+  id String @id @default(cuid()) @map("_id")
   email String
-}
-
-model UserAuth {
-  id String @id @default(cuid())
-  token String
-  valid Boolean
-}
-
-model GoogleAuth {
-  id String @id @default(cuid())
-  token String
-  valid Boolean
+  userId String
+  createdAt DateTime @default(now())
 }
 
 model Emote {
-  id String @id @default(cuid())
+  id String @id @default(cuid()) @map("_id")
   name String
   bytes Bytes
 }
 
 model ChannelEmote {
-  id String @id @default(cuid())
+  id String @id @default(cuid()) @map("_id")
   channel String
 }
 
 model Avatar {
-  id String @id @default(cuid())
-  name String
+  id String @id @default(cuid()) @map("_id")
   bytes Bytes
 }
 
 model Channel {
-  id String @id @default(cuid())
+  id String @id @default(cuid()) @map("_id")
   name String
   description String
-  user String
+  owner String
   viewers Int
 }
 
 model ChannelCard {
-  id String @id @default(cuid())
+  id String @id @default(cuid()) @map("_id")
   channel String
   type String
   heading String
@@ -70,35 +67,20 @@ model ChannelCard {
 }
 
 model Viewer {
-  id String @id @default(cuid())
+  id String @id @default(cuid()) @map("_id")
   channel String
   user String
 }
 
 model StreamKey {
-  userId String @id @default(cuid())
+  userId String @id @default(cuid()) @map("_id")
   key String
 }
 
 model Stream {
-  id String @id @default(cuid())
+  id String @id @default(cuid()) @map("_id")
   userId String
   description String
   game String
   createdAt DateTime @default(now())
-}
-
-model Game {
-  id String @id @default(cuid())
-  name String
-  publisher String
-  description String
-  storeUrl String
-  url String
-}
-
-model SteamGame {
-  id String @id @default(cuid())
-  gameId String
-  url String
 }
