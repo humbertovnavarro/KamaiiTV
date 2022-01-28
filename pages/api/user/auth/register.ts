@@ -1,29 +1,20 @@
-import { PrismaClient } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { Response } from "../../_types.d.";
 import argon2 from "argon2";
+import { validEmail, validUsername, validPassword } from "../../../../lib/validators";
+import prisma from "../../../../lib/prismaClient";
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Response<undefined>>
 ) {
   const { username, hashedPassword, email } = req.body;
-
-  if (!username || typeof username != "string") {
-    return res.status(400).send({
-      error: "Invalid username",
-    });
+  const invalidUsernameError = validUsername(req);
+  const invalidEmailError = validEmail(req);
+  const invalidPasswordError = validPassword(req);
+  if (invalidUsernameError || invalidEmailError || invalidPasswordError) {
+    const error = invalidEmailError || invalidUsernameError || invalidPasswordError;
+    return res.status(400).json(error as Response<undefined>);
   }
-  if (!hashedPassword || typeof hashedPassword != "string") {
-    return res.send({
-      error: "Invalid password",
-    });
-  }
-  if (!email || typeof email != "string") {
-    return res.send({
-      error: "Invalid email",
-    });
-  }
-  const prisma = new PrismaClient();
   const password = await argon2.hash(hashedPassword);
   const exists = await prisma.user.findFirst({
     where: {
@@ -36,7 +27,7 @@ export default async function handler(
     },
   });
   if (exists) {
-    return res.status(409).send({
+    return res.status(409).json({
       error: `Username "${exists.username}" already exists`,
     });
   }

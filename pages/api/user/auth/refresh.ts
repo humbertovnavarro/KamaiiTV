@@ -1,10 +1,8 @@
-import { PrismaClient } from "@prisma/client";
 import requestIp from "request-ip";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { Response } from "../../_types.d.";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-import _ from "lodash";
 interface Token {
   username: string;
   email: string;
@@ -15,28 +13,28 @@ interface Token {
 dotenv.config();
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Response<object>>
+  res: NextApiResponse<Response<string>>
 ) {
   const ip = requestIp.getClientIp(req);
   const SECRET = process.env.JWT_SECRET;
   if (!SECRET) {
-    return res.status(500).send({
+    return res.status(500).json({
       error: "Internal server error",
     });
   }
   const validToken = jwt.verify(req.cookies.token, SECRET) as Token;
   if (!validToken) {
-    return res.status(401).send({
+    return res.status(401).json({
       error: "Unauthorized",
     });
   }
   if (typeof validToken !== "object" || !validToken.ip) {
-    return res.status(401).send({
+    return res.status(401).json({
       error: "Unauthorized",
     });
   }
   if (validToken.ip !== ip) {
-    return res.status(401).send({
+    return res.status(401).json({
       error: "Unauthorized",
     });
   }

@@ -34,7 +34,7 @@ export function propertyValidator(
         return;
       } else {
         return {
-          error: `Invalid ${key}`,
+          error: `${key} must be a ${type} and match ${regex}`,
         };
       }
     };

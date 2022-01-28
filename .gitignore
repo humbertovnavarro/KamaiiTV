@@ -8,3 +8,5 @@ error.log
 config.json
 prisma/migrations
 .next
+.package-lock.json
+yarn.lock
