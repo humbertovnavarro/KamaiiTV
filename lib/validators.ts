@@ -13,28 +13,30 @@ interface PropertyValidatorOptions {
 type PropertyValidatorError = {
   error: string;
 };
-export function propertyValidator(opts: PropertyValidatorOptions): (req: NextApiRequest) => PropertyValidatorError | false {
+export function propertyValidator(
+  opts: PropertyValidatorOptions
+): (req: NextApiRequest) => PropertyValidatorError | false {
   return (req: NextApiRequest) => {
     const { key, type } = opts;
-    if(!req || !req.body) {
+    if (!req || !req.body) {
       return {
-        error: "no data"
-      }
+        error: "no data",
+      };
     }
-    if(typeof req.body[key] != type) {
+    if (typeof req.body[key] != type) {
       return {
-        error: `property ${key} is not of type ${type}`
-      }
+        error: `property ${key} is not of type ${type}`,
+      };
     }
-    if(opts.regex) {
-      if(!req.body[key].toString().match(opts.regex)) {
+    if (opts.regex) {
+      if (!req.body[key].toString().match(opts.regex)) {
         return {
-          error: `property ${key} does not conform to ${opts.regex}`
-        }
+          error: `property ${key} does not conform to ${opts.regex}`,
+        };
       }
     }
     return false;
-  }
+  };
 }
 const validUsername = propertyValidator({
   type: ValidatorType.String,

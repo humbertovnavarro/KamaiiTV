@@ -52,7 +52,7 @@ export default async function handler(
       password: true,
     },
   });
-  if(!dbUser) {
+  if (!dbUser) {
     dbUser = await prisma.user.findFirst({
       where: {
         email,

@@ -49,8 +49,8 @@ export default async function handler(
       error: "ok",
       data: signedPayload,
     });
-  } catch(e) {
+  } catch (e) {
     console.error(e);
-    res.status(500).json({error: "internal server error"})
+    res.status(500).json({ error: "internal server error" });
   }
 }

@@ -20,7 +20,7 @@ class UserRepository {
         usernameLower: {
           equals: username.toLowerCase(),
         },
-      }
+      },
     });
   }
 }

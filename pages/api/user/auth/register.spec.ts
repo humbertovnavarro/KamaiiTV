@@ -1,6 +1,6 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import { json } from 'stream/consumers';
-import handler from './register';
+import { NextApiRequest, NextApiResponse } from "next";
+import { json } from "stream/consumers";
+import handler from "./register";
 jest.mock("../../../../repositories/UserRepository");
 describe("api/user/auth/register", () => {
   test("Handled empty body", (done) => {
@@ -8,14 +8,14 @@ describe("api/user/auth/register", () => {
     const res = {
       status: jest.fn(() => {
         return {
-          json
-        }
-      })
-    } as unknown as NextApiResponse
-    handler({} as NextApiRequest, res).then(() =>{
+          json,
+        };
+      }),
+    } as unknown as NextApiResponse;
+    handler({} as NextApiRequest, res).then(() => {
       done();
-      expect(res.status).toBeCalledWith(400)
-      expect(json).toBeCalledWith({error: "no data"})
+      expect(res.status).toBeCalledWith(400);
+      expect(json).toBeCalledWith({ error: "no data" });
     });
   });
 
@@ -24,19 +24,19 @@ describe("api/user/auth/register", () => {
     const res = {
       status: jest.fn(() => {
         return {
-          json
-        }
-      })
-    } as unknown as NextApiResponse
+          json,
+        };
+      }),
+    } as unknown as NextApiResponse;
     const req = {
       body: {
         username: "sussy",
         password: "amongus",
-        email: "amongusamongus@amongus.com"
-      }
-    }
+        email: "amongusamongus@amongus.com",
+      },
+    };
     await handler(req as NextApiRequest, res);
     expect(res.status).toBeCalledWith(200);
-    expect(json).toBeCalledWith({ "error": "ok" });
+    expect(json).toBeCalledWith({ error: "ok" });
   });
-})
+});
