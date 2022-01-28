@@ -4,7 +4,6 @@ export enum ValidatorType {
   Number = "number",
   Boolean = "boolean",
   Array = "array",
-  PositiveInteger = "positiveInteger",
 }
 interface PropertyValidatorOptions {
   type: ValidatorType;
@@ -14,65 +13,27 @@ interface PropertyValidatorOptions {
 type PropertyValidatorError = {
   error: string;
 };
-export function propertyValidator(
-  options: PropertyValidatorOptions
-): (req: NextApiRequest) => PropertyValidatorError | void {
-  const { type, key, regex } = options;
-  if (regex && typeof type !== "string") {
-    console.error(
-      `fatal error: propertyValidator: type must be a string when regex matcher is provided`
-    );
-    process.exit(1);
-  }
-  if (regex && typeof type === "string") {
-    return (req: NextApiRequest) => {
-      if (
-        req.body[key] &&
-        typeof req.body[key] === type &&
-        regex.test(req.body[key])
-      ) {
-        return;
-      } else {
-        return {
-          error: `${key} must be a ${type} and match ${regex}`,
-        };
+export function propertyValidator(opts: PropertyValidatorOptions): (req: NextApiRequest) => PropertyValidatorError | false {
+  return (req: NextApiRequest) => {
+    const { key, type } = opts;
+    if(!req || !req.body) {
+      return {
+        error: "no data"
       }
-    };
-  }
-  const baseCase = (req: NextApiRequest) => {
-    return req.body[key] && typeof req.body[key] === type;
-  };
-  switch (type) {
-    case ValidatorType.Number:
-      return (req: NextApiRequest) => {
-        if (baseCase(req) && !isNaN(req.body[key] as number)) {
-          return;
-        }
+    }
+    if(typeof req.body[key] != type) {
+      return {
+        error: `property ${key} is not of type ${type}`
+      }
+    }
+    if(opts.regex) {
+      if(!req.body[key].toString().match(opts.regex)) {
         return {
-          error: `Invalid ${key}`,
-        };
-      };
-    case ValidatorType.PositiveInteger:
-      return (req: NextApiRequest) => {
-        const valid =
-          baseCase(req) &&
-          !isNaN(req.body[key] as number) &&
-          (req.body[key] as number) >= 0 &&
-          (req.body[key] as number) === Math.floor(req.body[key] as number);
-        if (valid) {
-          return;
+          error: `property ${key} does not conform to ${opts.regex}`
         }
-      };
-    default:
-      return (req: NextApiRequest) => {
-        if (req.body[key] && typeof req.body[key] === type) {
-          return;
-        } else {
-          return {
-            error: `Invalid ${key}`,
-          };
-        }
-      };
+      }
+    }
+    return false;
   }
 }
 const validUsername = propertyValidator({
